@@ -76,13 +76,18 @@ WSGI_APPLICATION = 'librarium_api.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
+with open('secret/dbuser.txt') as f:
+    DB_USER = f.read().strip()
+
+with open('secret/dbpassword.txt') as f:
+    DB_PASSWORD = f.read().strip()
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'librarium_api_db',
-        'USER' : 'UNSET',
-        'PASSWORD' : 'UNSET',
+        'USER' : DB_USER,
+        'PASSWORD' : DB_PASSWORD,
         'HOST' : 'localhost',
     }
 }
