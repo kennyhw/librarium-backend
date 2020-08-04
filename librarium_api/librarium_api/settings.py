@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/3.0/ref/settings/
 """
 
 import os
+from pathlib import Path
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,7 +21,9 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/3.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-with open('secret/secret_key.txt') as f:
+secret_key_path = Path(__file__).parent / "./secret/secret_key.txt"
+
+with secret_key_path.open() as f:
     SECRET_KEY = f.read().strip()
 
 # SECURITY WARNING: don't run with debug turned on in production!
@@ -76,19 +79,23 @@ WSGI_APPLICATION = 'librarium_api.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
-with open('secret/dbuser.txt') as f:
+dbuser_path = Path(__file__).parent / "./secret/dbuser.txt"
+dbpassword_path = Path(__file__).parent / "./secret/dbpassword.txt"
+
+with dbuser_path.open() as f:
     DB_USER = f.read().strip()
 
-with open('secret/dbpassword.txt') as f:
+with dbpassword_path.open() as f:
     DB_PASSWORD = f.read().strip()
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'librarium_api_db',
-        'USER' : DB_USER,
-        'PASSWORD' : DB_PASSWORD,
-        'HOST' : 'localhost',
+        'USER': DB_USER,
+        'PASSWORD': DB_PASSWORD,
+        'HOST': 'localhost',
+        'PORT': '',
     }
 }
 
